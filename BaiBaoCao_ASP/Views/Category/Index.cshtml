@@ -1,0 +1,91 @@
+﻿@model IEnumerable<BaiBaoCao_ASP.Models.category>
+
+@{
+    ViewBag.Title = "Danh mục";
+}
+
+<!-- Custom CSS for card height consistency -->
+<style>
+    .card-category {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .img-wrap img {
+        width: 100%;
+        height: auto;
+    }
+
+    .card-body {
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .card-category .card-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+
+    .card-category .list-menu {
+        overflow: hidden;
+        height: 200px; /* Adjust based on your design */
+        text-overflow: ellipsis;
+    }
+
+        .card-category .list-menu li {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+</style>
+
+<section class="section-content padding-y">
+    <div class="container">
+        <nav class="row">
+            @foreach (var category in Model)
+            {
+                <div class="col-md-3 mb-4">
+                    <div class="card card-category h-100">
+                        <div class="img-wrap" style="background: #ffd7d7;">
+                            <img src="@Url.Content("~/Content/images/categories/" + category.image)" alt="@category.name">
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a href="@Url.Action("ListProductByCategory", "Category", new { id = category.id })">
+                                    @category.name
+                                </a>
+                            </h4>
+                            <ul class="list-menu">
+                                <li><a href="#">@category.description</a></li>
+                                <!-- Thêm các mục khác tại đây nếu cần -->
+                            </ul>
+                        </div>
+                    </div>
+                </div> <!-- col.// -->
+            }
+        </nav> <!-- row.// -->
+    </div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+<!-- ========================= SECTION SUBSCRIBE  ========================= -->
+<section class="padding-y-lg bg-light border-top">
+    <div class="container">
+        <p class="pb-2 text-center">Cập nhật xu hướng sản phẩm và tin tức mới nhất qua email</p>
+        <div class="row justify-content-md-center">
+            <div class="col-lg-4 col-sm-6">
+                <form class="form-row">
+                    <div class="col-8">
+                        <input class="form-control" placeholder="Email của bạn" type="email">
+                    </div> <!-- col.// -->
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-block btn-warning"> <i class="fa fa-envelope"></i> Đăng ký </button>
+                    </div> <!-- col.// -->
+                </form>
+                <small class="form-text">Chúng tôi sẽ không chia sẻ địa chỉ email của bạn với bên thứ ba. </small>
+            </div> <!-- col-md-6.// -->
+        </div>
+    </div>
+</section>
+<!-- ========================= SECTION SUBSCRIBE END// ========================= -->

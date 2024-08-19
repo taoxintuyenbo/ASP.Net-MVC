@@ -1,0 +1,76 @@
+﻿@model List<BaiBaoCao_ASP.Models.product>
+
+@{
+    ViewBag.Title = "Kết Quả Tìm Kiếm";
+}
+
+@if (Model != null && Model.Any())
+{
+    <header class="my-3">
+        <div class="form-inline">
+            <strong class="mr-md-auto">@Model.Count Mặt hàng được tìm thấy</strong>
+            <form method="get" action="@Url.Action("Search", "Product")" class="form-inline">
+                <select name="sortOrder" class="mr-2 form-control">
+                    <option value="latest" @(ViewBag.SortOrder == "latest" ? "selected" : "")>Mặt hàng mới nhất</option>
+                    <option value="oldest" @(ViewBag.SortOrder == "oldest" ? "selected" : "")>Mặt hàng cũ nhất</option>
+                    <option value="priceAsc" @(ViewBag.SortOrder == "priceAsc" ? "selected" : "")>Giá: Thấp đến Cao</option>
+                    <option value="priceDesc" @(ViewBag.SortOrder == "priceDesc" ? "selected" : "")>Giá: Cao đến Thấp</option>
+                </select>
+
+                <input type="hidden" name="searchType" value="@ViewBag.SearchType" />
+                <input type="hidden" name="query" value="@ViewBag.Query" />
+                <button type="submit" class="btn btn-primary">Sắp xếp</button>
+            </form>
+        </div>
+    </header>
+    <!-- Render Products -->
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-3 col-6">
+                <figure class="card card-product-grid">
+                    <div class="img-wrap">
+                        <img src="@Url.Content("~/Content/images/products/" + product.image)" alt="@product.name">
+                    </div> <!-- img-wrap.// -->
+                    <figcaption class="info-wrap">
+                        <a href="@Url.Action("Details", "Product", new { id = product.id })" class="title mb-2">@product.name</a>
+                        <div class="price-wrap">
+                            @if (product.pricesale.HasValue)
+                            {
+                                <span class="price">
+                                    $@product.pricesale.Value.ToString("F2") - $@product.price.ToString("F2")
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="price">
+                                    $@product.price.ToString("F2")
+                                </span>
+                            }
+                            <small class="text-muted">/mỗi mặt hàng</small>
+                        </div> <!-- price-wrap.// -->
+
+                        <label class="custom-control mb-3 custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <div class="custom-control-label">Thêm vào so sánh</div>
+                        </label>
+
+                        <a href="@Url.Action("Details", "Product", new { id = product.id })" class="btn btn-outline-primary">
+                            <i class="fa fa-envelope"></i> Xem Thêm
+                        </a>
+                    </figcaption>
+                </figure>
+            </div> <!-- col.// -->
+        }
+    </div> <!-- row end.// -->
+
+    <div class="box text-center">
+        <p>Bạn đã tìm thấy những gì bạn cần?</p>
+        <a href="#" class="btn btn-light">Có</a>
+        <a href="#" class="btn btn-light">Không</a>
+    </div>
+}
+else
+{
+    <h1>Không tìm thấy kết quả</h1>
+}

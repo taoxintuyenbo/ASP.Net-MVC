@@ -1,0 +1,51 @@
+﻿@model BaiBaoCao_ASP.Models.user
+
+<section class="section-conten padding-y" style="min-height:84vh">
+    <!-- ============================ COMPONENT LOGIN   ================================= -->
+    <div class="card mx-auto" style="max-width: 380px; margin-top:100px;">
+        <div class="card-body">
+            <h4 class="card-title mb-4">Đăng nhập</h4>
+        </div> <!-- form-group// -->
+
+        <form asp-action="Login" asp-controller="User" method="post">
+            @Html.AntiForgeryToken()
+            <a href="#" class="btn btn-facebook btn-block mb-2">
+                <i class="fab fa-facebook-f"></i> &nbsp; Đăng nhập bằng Facebook
+            </a>
+            <a href="#" class="btn btn-google btn-block mb-4">
+                <i class="fab fa-google"></i> &nbsp; Đăng nhập bằng Google
+            </a>
+            <div class="form-group">
+                <input name="username" class="form-control @(ViewData.ModelState["Username"]?.Errors.Count > 0 ? "is-invalid" : "")" placeholder="Tên đăng nhập" type="text" value="@Request.Form["Username"]">
+                <span class="text-danger">@Html.ValidationMessage("Username")</span>
+            </div>
+
+            <div class="form-group">
+                <input name="Password" class="form-control @(ViewData.ModelState["Password"]?.Errors.Count > 0 ? "is-invalid" : "")" placeholder="Mật khẩu" type="password">
+                <span class="text-danger">@Html.ValidationMessage("Password")</span>
+            </div>
+            <div class="form-group">
+                <a href="#" class="float-right">Quên mật khẩu?</a>
+                <label class="float-left custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input">
+                    <div class="custom-control-label">Nhớ mật khẩu</div>
+                </label>
+            </div> <!-- form-group form-check .// -->
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
+            </div> <!-- form-group// -->
+            <span class="text-danger">@Html.ValidationMessage("Incorrect")</span>
+
+        </form>
+    </div> <!-- card-body.// -->
+    </div> <!-- card .// -->
+
+    <p class="text-center mt-4">Bạn chưa có tài khoản? <a href="@Url.Action("Register", "User", new { area = "" })">Đăng ký</a></p>
+    <br><br>
+    <!-- ============================ COMPONENT LOGIN  END.// ================================= -->
+</section>
+@if (TempData["SuccessMessage"] != null)
+{
+<script>
+        alert('@TempData["SuccessMessage"]');
+</script>}

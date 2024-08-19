@@ -1,0 +1,70 @@
+﻿@model IEnumerable<BaiBaoCao_ASP.Models.product>
+
+<section class="section-content padding-y">
+    <div class="container">
+        <div class="row no-gutters items-wrap">
+            <div class="row">
+                @foreach (var product in Model)
+                {
+                    <div class="col-md-3 col-6">
+                        <figure class="card card-product-grid">
+                            <div class="img-wrap">
+                                <img src="@Url.Content("~/Content/images/products/" + product.image)" alt="@product.name">
+                            </div>
+                            <figcaption class="info-wrap">
+                                <a href="@Url.Action("Details", "Product", new { id = product.id })" class="title mb-2">@product.name</a>
+                                <div class="price-wrap">
+                                    @if (product.pricesale.HasValue)
+                                    {
+                                        <span class="price">
+                                            VND @product.pricesale.Value.ToString("N0")
+                                        </span>
+                                        <small class="text-muted">
+                                            <del>VND @product.price.ToString("N0")</del>
+                                        </small>
+                                    }
+                                    else
+                                    {
+                                        <span class="price">
+                                            VND @product.price.ToString("N0")
+                                        </span>
+                                    }
+                                    <small class="text-muted">/mỗi sản phẩm</small>
+                                </div> <!-- price-wrap.// -->
+
+                                <label class="custom-control mb-3 custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <div class="custom-control-label">Thêm vào so sánh</div>
+                                </label>
+
+                                <a href="@Url.Action("Details", "Product", new { id = product.id })" class="btn btn-outline-primary">
+                                    <i class="fa fa-envelope"></i> Xem Thêm
+                                </a>
+                            </figcaption>
+                        </figure>
+                    </div> <!-- col.// -->
+                }
+            </div>
+        </div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+<!-- ========================= SECTION SUBSCRIBE  ========================= -->
+<section class="padding-y-lg bg-light border-top">
+    <div class="container">
+        <p class="pb-2 text-center">Cập nhật xu hướng sản phẩm và tin tức mới nhất qua email</p>
+        <div class="row justify-content-md-center">
+            <div class="col-lg-4 col-sm-6">
+                <form class="form-row">
+                    <div class="col-8">
+                        <input class="form-control" placeholder="Email của bạn" type="email">
+                    </div> <!-- col.// -->
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-block btn-warning"> <i class="fa fa-envelope"></i> Đăng ký </button>
+                    </div> <!-- col.// -->
+                </form>
+                <small class="form-text">Chúng tôi sẽ không chia sẻ địa chỉ email của bạn với bên thứ ba. </small>
+            </div> <!-- col-md-6.// -->
+        </div>
+    </div>
+</section>
+<!-- ========================= SECTION SUBSCRIBE END// ========================= -->
